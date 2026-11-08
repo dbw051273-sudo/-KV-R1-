@@ -2,71 +2,71 @@
   {
     "mode": "dense",
     "budget": "Full",
-    "n_runs": 9,
+    "n_runs": 150,
     "n_seeds": 3,
-    "accuracy_mean": 66.67,
+    "accuracy_mean": 38.0,
     "accuracy_std": 0.0,
     "wilson_95": [
-      35.42,
-      87.94
+      30.62,
+      45.98
     ],
-    "avg_tokens_per_sec": 19.73,
+    "avg_tokens_per_sec": 19.83,
     "avg_eviction_ms": 0.0
   },
   {
     "mode": "valuediff_pp",
     "budget": 256,
-    "n_runs": 9,
+    "n_runs": 150,
     "n_seeds": 3,
-    "accuracy_mean": 66.67,
+    "accuracy_mean": 38.0,
     "accuracy_std": 0.0,
     "wilson_95": [
-      35.42,
-      87.94
+      30.62,
+      45.98
     ],
-    "avg_tokens_per_sec": 19.65,
-    "avg_eviction_ms": 5.925
+    "avg_tokens_per_sec": 19.77,
+    "avg_eviction_ms": 0.861
   },
   {
     "mode": "snapkv_pp",
     "budget": 256,
-    "n_runs": 9,
+    "n_runs": 150,
     "n_seeds": 3,
-    "accuracy_mean": 66.67,
+    "accuracy_mean": 42.0,
     "accuracy_std": 0.0,
     "wilson_95": [
-      35.42,
-      87.94
+      34.4,
+      50.0
     ],
-    "avg_tokens_per_sec": 19.41,
-    "avg_eviction_ms": 1.119
+    "avg_tokens_per_sec": 19.45,
+    "avg_eviction_ms": 0.664
   },
   {
     "mode": "random_pp",
     "budget": 256,
-    "n_runs": 9,
+    "n_runs": 150,
     "n_seeds": 3,
-    "accuracy_mean": 66.67,
-    "accuracy_std": 0.0,
+    "accuracy_mean": 38.67,
+    "accuracy_std": 1.15,
     "wilson_95": [
-      35.42,
-      87.94
+      31.25,
+      46.65
     ],
-    "avg_tokens_per_sec": 19.62,
-    "avg_eviction_ms": 0.545
+    "avg_tokens_per_sec": 19.77,
+    "avg_eviction_ms": 0.462
   },
   {
     "mode": "vacor_kv",
     "budget": 256,
-    "n_runs": 6,
+    "n_runs": 150,
     "n_seeds": 3,
-    "accuracy_mean": 50.0,
-    "accuracy_std": 0.0,
+    "accuracy_mean": 41.33,
+    "accuracy_std": 2.31,
     "wilson_95": [
-      18.76,
-      81.24
+      33.77,
+      49.33
     ],
-    "avg_tokens_per_sec": 19.61,
-    "avg_eviction_ms": 1.016
+    "avg_tokens_per_sec": 19.75,
+    "avg_eviction_ms": 0.856
   }
 ]
