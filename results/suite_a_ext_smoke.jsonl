@@ -1,0 +1,11 @@
+{"m1": true, "m2": true, "m3": true, "all3": true, "final": true, "task": "milestone_08", "budget": 0, "mode": "dense", "seed": 0, "sec": 5.4, "model": "Qwen/Qwen3-1.7B"}
+{"m1": false, "m2": false, "m3": false, "all3": false, "final": false, "task": "milestone_08", "budget": 384, "mode": "recency_pp", "seed": 0, "sec": 7.1, "model": "Qwen/Qwen3-1.7B"}
+{"m1": false, "m2": false, "m3": true, "all3": false, "final": false, "task": "milestone_08", "budget": 384, "mode": "snapkv_pp", "seed": 0, "sec": 7.4, "model": "Qwen/Qwen3-1.7B"}
+{"m1": false, "m2": false, "m3": true, "all3": false, "final": false, "task": "milestone_08", "budget": 384, "mode": "rkv_pp", "seed": 0, "sec": 7.8, "model": "Qwen/Qwen3-1.7B"}
+{"m1": true, "m2": true, "m3": true, "all3": true, "final": true, "task": "milestone_08", "budget": 384, "mode": "valuediff_pp", "seed": 0, "sec": 7.2, "model": "Qwen/Qwen3-1.7B"}
+{"m1": true, "m2": true, "m3": true, "all3": true, "final": true, "task": "milestone_08", "budget": 384, "mode": "valuediff_smooth_pp", "seed": 0, "sec": 7.2, "model": "Qwen/Qwen3-1.7B"}
+{"m1": true, "m2": true, "m3": false, "all3": false, "final": false, "task": "milestone_08", "budget": 384, "mode": "vase_pp", "seed": 0, "sec": 7.9, "model": "Qwen/Qwen3-1.7B"}
+{"m1": false, "m2": false, "m3": false, "all3": false, "final": true, "task": "milestone_08", "budget": 384, "mode": "random_pp", "seed": 0, "sec": 7.4, "model": "Qwen/Qwen3-1.7B"}
+{"m1": true, "m2": true, "m3": false, "all3": false, "final": false, "task": "milestone_08", "budget": 384, "mode": "vacor_kv", "seed": 0, "sec": 7.7, "model": "Qwen/Qwen3-1.7B"}
+{"m1": true, "m2": true, "m3": false, "all3": false, "final": false, "task": "milestone_08", "budget": 384, "mode": "vacor_pin", "seed": 0, "sec": 7.8, "model": "Qwen/Qwen3-1.7B"}
+{"m1": false, "m2": false, "m3": false, "all3": false, "final": false, "task": "milestone_08", "budget": 384, "mode": "vacor_antithetic_only", "seed": 0, "sec": 7.5, "model": "Qwen/Qwen3-1.7B"}

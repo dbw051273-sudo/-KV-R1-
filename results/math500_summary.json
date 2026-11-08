@@ -1,0 +1,72 @@
+[
+  {
+    "mode": "dense",
+    "budget": "Full",
+    "n_runs": 9,
+    "n_seeds": 3,
+    "accuracy_mean": 66.67,
+    "accuracy_std": 0.0,
+    "wilson_95": [
+      35.42,
+      87.94
+    ],
+    "avg_tokens_per_sec": 19.73,
+    "avg_eviction_ms": 0.0
+  },
+  {
+    "mode": "valuediff_pp",
+    "budget": 256,
+    "n_runs": 9,
+    "n_seeds": 3,
+    "accuracy_mean": 66.67,
+    "accuracy_std": 0.0,
+    "wilson_95": [
+      35.42,
+      87.94
+    ],
+    "avg_tokens_per_sec": 19.65,
+    "avg_eviction_ms": 5.925
+  },
+  {
+    "mode": "snapkv_pp",
+    "budget": 256,
+    "n_runs": 9,
+    "n_seeds": 3,
+    "accuracy_mean": 66.67,
+    "accuracy_std": 0.0,
+    "wilson_95": [
+      35.42,
+      87.94
+    ],
+    "avg_tokens_per_sec": 19.41,
+    "avg_eviction_ms": 1.119
+  },
+  {
+    "mode": "random_pp",
+    "budget": 256,
+    "n_runs": 9,
+    "n_seeds": 3,
+    "accuracy_mean": 66.67,
+    "accuracy_std": 0.0,
+    "wilson_95": [
+      35.42,
+      87.94
+    ],
+    "avg_tokens_per_sec": 19.62,
+    "avg_eviction_ms": 0.545
+  },
+  {
+    "mode": "vacor_kv",
+    "budget": 256,
+    "n_runs": 6,
+    "n_seeds": 3,
+    "accuracy_mean": 50.0,
+    "accuracy_std": 0.0,
+    "wilson_95": [
+      18.76,
+      81.24
+    ],
+    "avg_tokens_per_sec": 19.61,
+    "avg_eviction_ms": 1.016
+  }
+]
