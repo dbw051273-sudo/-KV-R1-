@@ -1,0 +1,98 @@
+[
+  {
+    "suite": "SuiteB_FreeGen_Math_Reasoning",
+    "mode": "dense",
+    "token_budget": "Full",
+    "num_problems": 8,
+    "accuracy_pct": 50.0,
+    "avg_gen_tokens": 280.6,
+    "avg_tokens_per_sec": 11.9,
+    "avg_eviction_ms": 0.0,
+    "union_coverage_pct": 100.0,
+    "q1_oldest_union_pct": 100.0
+  },
+  {
+    "suite": "SuiteB_FreeGen_Math_Reasoning",
+    "mode": "recency_pp",
+    "token_budget": 224,
+    "num_problems": 8,
+    "accuracy_pct": 37.5,
+    "avg_gen_tokens": 271.6,
+    "avg_tokens_per_sec": 11.6,
+    "avg_eviction_ms": 1.02,
+    "union_coverage_pct": 52.6,
+    "q1_oldest_union_pct": 13.0
+  },
+  {
+    "suite": "SuiteB_FreeGen_Math_Reasoning",
+    "mode": "snapkv_pp",
+    "token_budget": 224,
+    "num_problems": 8,
+    "accuracy_pct": 50.0,
+    "avg_gen_tokens": 275.5,
+    "avg_tokens_per_sec": 6.1,
+    "avg_eviction_ms": 4.87,
+    "union_coverage_pct": 70.0,
+    "q1_oldest_union_pct": 57.7
+  },
+  {
+    "suite": "SuiteB_FreeGen_Math_Reasoning",
+    "mode": "rkv_pp",
+    "token_budget": 224,
+    "num_problems": 8,
+    "accuracy_pct": 37.5,
+    "avg_gen_tokens": 270.2,
+    "avg_tokens_per_sec": 6.7,
+    "avg_eviction_ms": 4.63,
+    "union_coverage_pct": 65.6,
+    "q1_oldest_union_pct": 87.2
+  },
+  {
+    "suite": "SuiteB_FreeGen_Math_Reasoning",
+    "mode": "vase_pp",
+    "token_budget": 224,
+    "num_problems": 8,
+    "accuracy_pct": 37.5,
+    "avg_gen_tokens": 263.1,
+    "avg_tokens_per_sec": 6.7,
+    "avg_eviction_ms": 8.64,
+    "union_coverage_pct": 80.6,
+    "q1_oldest_union_pct": 76.6
+  },
+  {
+    "suite": "SuiteB_FreeGen_Math_Reasoning",
+    "mode": "valuediff_pp",
+    "token_budget": 224,
+    "num_problems": 8,
+    "accuracy_pct": 37.5,
+    "avg_gen_tokens": 268.6,
+    "avg_tokens_per_sec": 7.2,
+    "avg_eviction_ms": 0.88,
+    "union_coverage_pct": 75.3,
+    "q1_oldest_union_pct": 77.7
+  },
+  {
+    "suite": "SuiteB_FreeGen_Math_Reasoning",
+    "mode": "random_pp",
+    "token_budget": 224,
+    "num_problems": 8,
+    "accuracy_pct": 37.5,
+    "avg_gen_tokens": 268.1,
+    "avg_tokens_per_sec": 6.36,
+    "avg_eviction_ms": 6.148,
+    "union_coverage_pct": 86.36,
+    "q1_oldest_union_pct": 80.11
+  },
+  {
+    "suite": "SuiteB_FreeGen_Math_Reasoning",
+    "mode": "vacor_kv",
+    "token_budget": 224,
+    "num_problems": 8,
+    "accuracy_pct": 37.5,
+    "avg_gen_tokens": 268.6,
+    "avg_tokens_per_sec": 7.8,
+    "avg_eviction_ms": 4.144,
+    "union_coverage_pct": 80.32,
+    "q1_oldest_union_pct": 84.33
+  }
+]

@@ -1,0 +1,209 @@
+[
+  {
+    "mode": "recency_pp",
+    "per_head_retention_pct": 12.82,
+    "indep_expected_union_pct": 66.63,
+    "theoretical_disjoint_max_pct": 100.0,
+    "actual_union_coverage_pct": 12.82,
+    "correlation_deficit_pct": 53.81,
+    "landmark_head_retention_pct": 6.25,
+    "landmark_union_retention_pct": 6.25,
+    "age_quartiles_union_pct": {
+      "Q1_oldest": 0.0,
+      "Q2_early_mid": 0.0,
+      "Q3_late_mid": 0.0,
+      "Q4_recent": 51.28
+    },
+    "age_quartiles_head_pct": {
+      "Q1_oldest": 0.0,
+      "Q2_early_mid": 0.0,
+      "Q3_late_mid": 0.0,
+      "Q4_recent": 51.28
+    },
+    "avg_eviction_latency_ms": 0.3383
+  },
+  {
+    "mode": "snapkv_pp",
+    "per_head_retention_pct": 12.82,
+    "indep_expected_union_pct": 66.63,
+    "theoretical_disjoint_max_pct": 100.0,
+    "actual_union_coverage_pct": 56.33,
+    "correlation_deficit_pct": 10.3,
+    "landmark_head_retention_pct": 10.16,
+    "landmark_union_retention_pct": 56.25,
+    "age_quartiles_union_pct": {
+      "Q1_oldest": 41.67,
+      "Q2_early_mid": 46.63,
+      "Q3_late_mid": 55.13,
+      "Q4_recent": 81.89
+    },
+    "age_quartiles_head_pct": {
+      "Q1_oldest": 6.75,
+      "Q2_early_mid": 7.83,
+      "Q3_late_mid": 10.16,
+      "Q4_recent": 26.54
+    },
+    "avg_eviction_latency_ms": 0.6999
+  },
+  {
+    "mode": "rkv_pp",
+    "per_head_retention_pct": 12.82,
+    "indep_expected_union_pct": 66.63,
+    "theoretical_disjoint_max_pct": 100.0,
+    "actual_union_coverage_pct": 58.21,
+    "correlation_deficit_pct": 8.42,
+    "landmark_head_retention_pct": 11.72,
+    "landmark_union_retention_pct": 62.5,
+    "age_quartiles_union_pct": {
+      "Q1_oldest": 68.91,
+      "Q2_early_mid": 44.23,
+      "Q3_late_mid": 44.23,
+      "Q4_recent": 75.48
+    },
+    "age_quartiles_head_pct": {
+      "Q1_oldest": 14.72,
+      "Q2_early_mid": 7.53,
+      "Q3_late_mid": 7.19,
+      "Q4_recent": 21.83
+    },
+    "avg_eviction_latency_ms": 1.0684
+  },
+  {
+    "mode": "vase_pp",
+    "per_head_retention_pct": 12.82,
+    "indep_expected_union_pct": 66.63,
+    "theoretical_disjoint_max_pct": 100.0,
+    "actual_union_coverage_pct": 42.35,
+    "correlation_deficit_pct": 24.29,
+    "landmark_head_retention_pct": 100.0,
+    "landmark_union_retention_pct": 100.0,
+    "age_quartiles_union_pct": {
+      "Q1_oldest": 18.43,
+      "Q2_early_mid": 22.12,
+      "Q3_late_mid": 37.18,
+      "Q4_recent": 91.67
+    },
+    "age_quartiles_head_pct": {
+      "Q1_oldest": 3.0,
+      "Q2_early_mid": 3.69,
+      "Q3_late_mid": 6.51,
+      "Q4_recent": 38.08
+    },
+    "avg_eviction_latency_ms": 1.0532
+  },
+  {
+    "mode": "valuediff_pp",
+    "per_head_retention_pct": 12.82,
+    "indep_expected_union_pct": 66.63,
+    "theoretical_disjoint_max_pct": 100.0,
+    "actual_union_coverage_pct": 64.5,
+    "correlation_deficit_pct": 2.13,
+    "landmark_head_retention_pct": 100.0,
+    "landmark_union_retention_pct": 100.0,
+    "age_quartiles_union_pct": {
+      "Q1_oldest": 66.83,
+      "Q2_early_mid": 63.62,
+      "Q3_late_mid": 63.94,
+      "Q4_recent": 63.62
+    },
+    "age_quartiles_head_pct": {
+      "Q1_oldest": 13.14,
+      "Q2_early_mid": 12.9,
+      "Q3_late_mid": 12.54,
+      "Q4_recent": 12.7
+    },
+    "avg_eviction_latency_ms": 0.5357
+  },
+  {
+    "mode": "random_pp",
+    "per_head_retention_pct": 12.82,
+    "indep_expected_union_pct": 66.63,
+    "theoretical_disjoint_max_pct": 100.0,
+    "actual_union_coverage_pct": 36.98,
+    "correlation_deficit_pct": 29.65,
+    "landmark_head_retention_pct": 6.25,
+    "landmark_union_retention_pct": 25.0,
+    "age_quartiles_union_pct": {
+      "Q1_oldest": 1.6,
+      "Q2_early_mid": 8.33,
+      "Q3_late_mid": 43.27,
+      "Q4_recent": 94.71
+    },
+    "age_quartiles_head_pct": {
+      "Q1_oldest": 0.2,
+      "Q2_early_mid": 1.08,
+      "Q3_late_mid": 7.25,
+      "Q4_recent": 42.75
+    },
+    "avg_eviction_latency_ms": 0.4714
+  },
+  {
+    "mode": "vacor_persist_only",
+    "per_head_retention_pct": 12.82,
+    "indep_expected_union_pct": 66.63,
+    "theoretical_disjoint_max_pct": 100.0,
+    "actual_union_coverage_pct": 65.58,
+    "correlation_deficit_pct": 1.05,
+    "landmark_head_retention_pct": 10.16,
+    "landmark_union_retention_pct": 50.0,
+    "age_quartiles_union_pct": {
+      "Q1_oldest": 73.24,
+      "Q2_early_mid": 68.59,
+      "Q3_late_mid": 62.34,
+      "Q4_recent": 58.17
+    },
+    "age_quartiles_head_pct": {
+      "Q1_oldest": 15.18,
+      "Q2_early_mid": 14.02,
+      "Q3_late_mid": 11.68,
+      "Q4_recent": 10.4
+    },
+    "avg_eviction_latency_ms": 0.5702
+  },
+  {
+    "mode": "vacor_antithetic_only",
+    "per_head_retention_pct": 12.82,
+    "indep_expected_union_pct": 66.63,
+    "theoretical_disjoint_max_pct": 100.0,
+    "actual_union_coverage_pct": 94.15,
+    "correlation_deficit_pct": -27.52,
+    "landmark_head_retention_pct": 11.72,
+    "landmark_union_retention_pct": 87.5,
+    "age_quartiles_union_pct": {
+      "Q1_oldest": 100.0,
+      "Q2_early_mid": 99.68,
+      "Q3_late_mid": 93.59,
+      "Q4_recent": 83.33
+    },
+    "age_quartiles_head_pct": {
+      "Q1_oldest": 15.26,
+      "Q2_early_mid": 13.62,
+      "Q3_late_mid": 11.96,
+      "Q4_recent": 10.44
+    },
+    "avg_eviction_latency_ms": 0.5977
+  },
+  {
+    "mode": "vacor_kv",
+    "per_head_retention_pct": 12.82,
+    "indep_expected_union_pct": 66.63,
+    "theoretical_disjoint_max_pct": 100.0,
+    "actual_union_coverage_pct": 92.55,
+    "correlation_deficit_pct": -25.91,
+    "landmark_head_retention_pct": 86.72,
+    "landmark_union_retention_pct": 100.0,
+    "age_quartiles_union_pct": {
+      "Q1_oldest": 100.0,
+      "Q2_early_mid": 99.2,
+      "Q3_late_mid": 91.67,
+      "Q4_recent": 79.33
+    },
+    "age_quartiles_head_pct": {
+      "Q1_oldest": 15.2,
+      "Q2_early_mid": 13.74,
+      "Q3_late_mid": 12.08,
+      "Q4_recent": 10.26
+    },
+    "avg_eviction_latency_ms": 0.8095
+  }
+]
