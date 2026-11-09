@@ -158,7 +158,7 @@ class UnifiedEvictLayer(DynamicLayer):
             )
 
     def needs_queries(self) -> bool:
-        return self.MODE in ("snapkv_pp", "rkv_pp", "vase_pp")
+        return self.MODE in ("snapkv_pp", "rkv_pp", "vase_pp", "h2o_pp", "tova_pp")
 
     def update_queries(self, query_states: torch.Tensor) -> None:
         """
@@ -414,6 +414,30 @@ class UnifiedEvictLayer(DynamicLayer):
         # =====================================================================
         elif self.MODE == "snapkv_pp":
             attn_scores = self._compute_attention_scores(self.queries, k_candidates)
+            cot_scores = attn_scores[:, :, pl:n_cand]
+            cot_keep = cot_scores.topk(K_free, dim=-1, largest=True).indices + pl
+            cot_keep, _ = cot_keep.sort(dim=-1)
+            ids_to_keep = torch.cat([prompt_idx, cot_keep], dim=-1)
+
+        # =====================================================================
+        # Method 3b: `tova_pp` (TOVA: Top-k Attention Vector of Latest Token)
+        # =====================================================================
+        elif self.MODE == "tova_pp":
+            latest_q = self.queries[:, :, -1:, :]
+            attn_scores = self._compute_attention_scores(latest_q, k_candidates)
+            cot_scores = attn_scores[:, :, pl:n_cand]
+            cot_keep = cot_scores.topk(K_free, dim=-1, largest=True).indices + pl
+            cot_keep, _ = cot_keep.sort(dim=-1)
+            ids_to_keep = torch.cat([prompt_idx, cot_keep], dim=-1)
+
+        # =====================================================================
+        # Method 3c: `h2o_pp` (H2O: Heavy Hitter Oracle Cumulative Attention)
+        # =====================================================================
+        elif self.MODE == "h2o_pp":
+            orig_smooth = self.smooth
+            self.smooth = False
+            attn_scores = self._compute_attention_scores(self.queries, k_candidates)
+            self.smooth = orig_smooth
             cot_scores = attn_scores[:, :, pl:n_cand]
             cot_keep = cot_scores.topk(K_free, dim=-1, largest=True).indices + pl
             cot_keep, _ = cot_keep.sort(dim=-1)
@@ -721,3 +745,103 @@ def patch_qwen3_evict_sdpa() -> None:
     Qwen3Attention.forward = qwen3_sdpa_evict_forward
     Qwen3Attention._is_patched_for_unified_evict = True
     Qwen3Attention._orig_forward = orig_forward
+
+
+def patch_qwen2_evict_sdpa() -> None:
+    """
+    Monkey-patch `Qwen2Attention.forward` (e.g. Qwen2.5) to support `UnifiedEvictCache`.
+    Qwen2 does NOT have q_norm / k_norm, providing a direct architectural control.
+    """
+    from transformers.models.qwen2 import modeling_qwen2
+    from transformers.models.qwen2.modeling_qwen2 import Qwen2Attention, apply_rotary_pos_emb, repeat_kv
+
+    if getattr(Qwen2Attention, "_is_patched_for_unified_evict", False):
+        return
+
+    orig_forward = Qwen2Attention.forward
+
+    def qwen2_sdpa_evict_forward(
+        self,
+        hidden_states: torch.Tensor,
+        position_embeddings: tuple[torch.Tensor, torch.Tensor],
+        attention_mask: Optional[torch.Tensor] = None,
+        past_key_values: Optional[Cache] = None,
+        cache_position: Optional[torch.LongTensor] = None,
+        **kwargs: Any,
+    ) -> tuple[torch.Tensor, Optional[torch.Tensor]]:
+        if not isinstance(past_key_values, UnifiedEvictCache):
+            return orig_forward(
+                self,
+                hidden_states=hidden_states,
+                position_embeddings=position_embeddings,
+                attention_mask=attention_mask,
+                past_key_values=past_key_values,
+                cache_position=cache_position,
+                **kwargs,
+            )
+
+        input_shape = hidden_states.shape[:-1]
+        hidden_shape = (*input_shape, -1, self.head_dim)
+
+        # Qwen2 has NO q_norm or k_norm!
+        query_states = self.q_proj(hidden_states).view(hidden_shape).transpose(1, 2)
+        key_states = self.k_proj(hidden_states).view(hidden_shape).transpose(1, 2)
+        value_states = self.v_proj(hidden_states).view(hidden_shape).transpose(1, 2)
+
+        cos, sin = position_embeddings
+        query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin)
+
+        layer: UnifiedEvictLayer = past_key_values.layers[self.layer_idx]
+        layer.update_queries(query_states)
+
+        k_active, v_active = layer.append_and_get_kv(key_states, value_states)
+
+        q_len = query_states.shape[2]
+        kv_len = k_active.shape[2]
+
+        attn_mask = None
+        if q_len == 1:
+            is_causal = False
+        elif q_len == kv_len:
+            is_causal = True
+        else:
+            is_causal = False
+            past_len = kv_len - q_len
+            row_idx = torch.arange(q_len, device=query_states.device).unsqueeze(1) + past_len
+            col_idx = torch.arange(kv_len, device=query_states.device).unsqueeze(0)
+            attn_mask = col_idx <= row_idx
+
+        try:
+            attn_output = F.scaled_dot_product_attention(
+                query_states,
+                k_active,
+                v_active,
+                attn_mask=attn_mask,
+                dropout_p=0.0,
+                is_causal=is_causal,
+                scale=self.scaling,
+                enable_gqa=True,
+            )
+        except TypeError:
+            k_rep = repeat_kv(k_active, self.num_key_value_groups)
+            v_rep = repeat_kv(v_active, self.num_key_value_groups)
+            attn_output = F.scaled_dot_product_attention(
+                query_states,
+                k_rep,
+                v_rep,
+                attn_mask=attn_mask,
+                dropout_p=0.0,
+                is_causal=is_causal,
+                scale=self.scaling,
+            )
+
+        is_prefill = (layer.cumulative_length == q_len)
+        layer.maybe_evict(q_len, is_prefill=is_prefill)
+
+        attn_output = attn_output.transpose(1, 2).reshape(*input_shape, -1).contiguous()
+        attn_output = self.o_proj(attn_output)
+        return attn_output, None
+
+    Qwen2Attention.forward = qwen2_sdpa_evict_forward
+    Qwen2Attention._is_patched_for_unified_evict = True
+    Qwen2Attention._orig_forward = orig_forward

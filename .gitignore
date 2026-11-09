@@ -4,3 +4,4 @@ __pycache__/
 baselines/
 *.log
 *.err
+build_pdf_tmp/

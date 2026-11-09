@@ -54,6 +54,8 @@ def generate_pdf():
         "fig4_budget_scaling_pareto.png": FIGURES_DIR / "fig4_budget_scaling_pareto.png",
         "fig5_efficiency_and_memory_scaling.png": FIGURES_DIR / "fig5_efficiency_and_memory_scaling.png",
         "fig6_gsm8k_benchmark.png": FIGURES_DIR / "fig6_gsm8k_benchmark.png",
+        "fig7_qknorm_control_qwen25.png": FIGURES_DIR / "fig7_qknorm_control_qwen25.png",
+        "fig8_unified_latency_benchmark.png": FIGURES_DIR / "fig8_unified_latency_benchmark.png",
     }
 
     # Enhance markdown with actual images

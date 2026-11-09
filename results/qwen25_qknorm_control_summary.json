@@ -1,0 +1,30 @@
+{
+  "dense": {
+    "mean_all3": 100.0,
+    "n": 12
+  },
+  "snapkv_pp": {
+    "mean_all3": 0.0,
+    "n": 12
+  },
+  "h2o_pp": {
+    "mean_all3": 0.0,
+    "n": 12
+  },
+  "tova_pp": {
+    "mean_all3": 0.0,
+    "n": 12
+  },
+  "random_pp": {
+    "mean_all3": 0.0,
+    "n": 12
+  },
+  "valuediff_pp": {
+    "mean_all3": 50.0,
+    "n": 12
+  },
+  "vacor_kv": {
+    "mean_all3": 41.666664123535156,
+    "n": 12
+  }
+}

@@ -1,0 +1,51 @@
+[
+  {
+    "mode": "recency_pp",
+    "name": "Recency (StreamingLLM style)",
+    "single_layer_kernel_ms": 1.053,
+    "full_28_layers_ms": 29.49,
+    "requires_query": false
+  },
+  {
+    "mode": "random_pp",
+    "name": "Random Attention (Salesforce 2026)",
+    "single_layer_kernel_ms": 1.425,
+    "full_28_layers_ms": 39.89,
+    "requires_query": false
+  },
+  {
+    "mode": "tova_pp",
+    "name": "TOVA (Latest Token Attn, 2024)",
+    "single_layer_kernel_ms": 1.94,
+    "full_28_layers_ms": 54.31,
+    "requires_query": true
+  },
+  {
+    "mode": "h2o_pp",
+    "name": "H2O (Heavy Hitter Oracle, 2023)",
+    "single_layer_kernel_ms": 1.792,
+    "full_28_layers_ms": 50.16,
+    "requires_query": true
+  },
+  {
+    "mode": "snapkv_pp",
+    "name": "SnapKV (Observation Window Attn)",
+    "single_layer_kernel_ms": 2.118,
+    "full_28_layers_ms": 59.3,
+    "requires_query": true
+  },
+  {
+    "mode": "valuediff_pp",
+    "name": "ValueDiff (L2 Deviation from Mean)",
+    "single_layer_kernel_ms": 1.78,
+    "full_28_layers_ms": 49.84,
+    "requires_query": false
+  },
+  {
+    "mode": "vacor_kv",
+    "name": "VaCoR-KV (Block-Antithetic + Value)",
+    "single_layer_kernel_ms": 2.412,
+    "full_28_layers_ms": 67.53,
+    "requires_query": false
+  }
+]
