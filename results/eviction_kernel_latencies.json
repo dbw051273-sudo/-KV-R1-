@@ -1,0 +1,51 @@
+[
+  {
+    "mode": "recency_pp",
+    "name": "Recency-pp (Sliding Window)",
+    "mean_ms": 0.331,
+    "std_ms": 0.022,
+    "min_ms": 0.298
+  },
+  {
+    "mode": "random_pp",
+    "name": "Random-pp (Salesforce 2026)",
+    "mean_ms": 0.428,
+    "std_ms": 0.032,
+    "min_ms": 0.38
+  },
+  {
+    "mode": "vacor_kv",
+    "name": "VaCoR-KV (Ours: Block-Antithetic)",
+    "mean_ms": 0.842,
+    "std_ms": 0.034,
+    "min_ms": 0.782
+  },
+  {
+    "mode": "snapkv_pp",
+    "name": "SnapKV-pp (Attn Pooling)",
+    "mean_ms": 0.634,
+    "std_ms": 0.027,
+    "min_ms": 0.566
+  },
+  {
+    "mode": "rkv_pp",
+    "name": "R-KV-pp (Cosine Penalty)",
+    "mean_ms": 0.864,
+    "std_ms": 0.027,
+    "min_ms": 0.804
+  },
+  {
+    "mode": "vase_pp",
+    "name": "VaSE-pp (Value Range + Attn)",
+    "mean_ms": 0.972,
+    "std_ms": 0.059,
+    "min_ms": 0.891
+  },
+  {
+    "mode": "valuediff_pp",
+    "name": "ValueDiff-pp (Value L2 Deviation)",
+    "mean_ms": 0.462,
+    "std_ms": 0.02,
+    "min_ms": 0.425
+  }
+]

@@ -1,7 +1,71 @@
 # Suite A Extended Evaluation Summary (`q17b`)
 
-- **Total Records**: 656
+- **Total Records**: 819
 - **Model**: Qwen/Qwen3-1.7B
+
+## Budget 128
+
+| Mode | Tasks | Seeds | M1 (%) | M2 (%) | M3 (%) | All-3 (%) | 95% CI All-3 | Final (%) |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| dense* | 16 | 1 | 100.0 ± n/a | 100.0 ± n/a | 100.0 ± n/a | 100.0 ± n/a | [ 80.6%, 100.0%] |  93.8 ± n/a |
+| recency_pp | 5 | 1 |   0.0 ± n/a |   0.0 ± n/a |   0.0 ± n/a |   0.0 ± n/a | [  0.0%,  43.4%] |   0.0 ± n/a |
+| snapkv_pp | 5 | 1 |   0.0 ± n/a |  20.0 ± n/a |   0.0 ± n/a |   0.0 ± n/a | [  0.0%,  43.4%] |   0.0 ± n/a |
+| rkv_pp | 5 | 1 |   0.0 ± n/a |   0.0 ± n/a |  20.0 ± n/a |   0.0 ± n/a | [  0.0%,  43.4%] |   0.0 ± n/a |
+| valuediff_pp | 4 | 1 |   0.0 ± n/a |   0.0 ± n/a |  25.0 ± n/a |   0.0 ± n/a | [  0.0%,  49.0%] |   0.0 ± n/a |
+| valuediff_smooth_pp | 4 | 1 |   0.0 ± n/a |  25.0 ± n/a |  25.0 ± n/a |   0.0 ± n/a | [  0.0%,  49.0%] |   0.0 ± n/a |
+| vase_pp | 4 | 3 |   0.0 ±  0.0 |   8.3 ± 14.4 |   0.0 ±  0.0 |   0.0 ±  0.0 | [  0.0%,  24.2%] |   0.0 ±  0.0 |
+| random_pp | 4 | 3 |   0.0 ±  0.0 |   0.0 ±  0.0 |   0.0 ±  0.0 |   0.0 ±  0.0 | [  0.0%,  24.2%] |   0.0 ±  0.0 |
+| vacor_kv | 4 | 3 |   0.0 ±  0.0 |  25.0 ±  0.0 |  16.7 ± 14.4 |   0.0 ±  0.0 | [  0.0%,  24.2%] |   0.0 ±  0.0 |
+| vacor_pin | 4 | 3 |   0.0 ±  0.0 |   0.0 ±  0.0 |   0.0 ±  0.0 |   0.0 ±  0.0 | [  0.0%,  24.2%] |   0.0 ±  0.0 |
+| vacor_antithetic_only | 4 | 3 |   0.0 ±  0.0 |   0.0 ±  0.0 |   8.3 ± 14.4 |   0.0 ±  0.0 | [  0.0%,  24.2%] |   0.0 ±  0.0 |
+
+\* *dense evaluated with full KV cache (budget 0 / no eviction) as reference.*
+
+### Paired Comparison: vacor_kv vs valuediff_pp on All-3 (Budget 128)
+
+- **Evaluated Tasks**: 4
+- **vacor_kv wins**: 0 (0.0%)
+- **valuediff_pp wins**: 0 (0.0%)
+- **Ties**: 4 (100.0%)
+
+| Task | vacor_kv (avg All-3) | valuediff_pp (avg All-3) | Winner |
+| :--- | :---: | :---: | :---: |
+| milestone_08 | 0.00 | 0.00 | tie |
+| milestone_09 | 0.00 | 0.00 | tie |
+| milestone_10 | 0.00 | 0.00 | tie |
+| milestone_11 | 0.00 | 0.00 | tie |
+
+## Budget 256
+
+| Mode | Tasks | Seeds | M1 (%) | M2 (%) | M3 (%) | All-3 (%) | 95% CI All-3 | Final (%) |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| dense* | 16 | 1 | 100.0 ± n/a | 100.0 ± n/a | 100.0 ± n/a | 100.0 ± n/a | [ 80.6%, 100.0%] |  93.8 ± n/a |
+| recency_pp | 4 | 1 |   0.0 ± n/a |   0.0 ± n/a |  25.0 ± n/a |   0.0 ± n/a | [  0.0%,  49.0%] |   0.0 ± n/a |
+| snapkv_pp | 4 | 1 |   0.0 ± n/a |   0.0 ± n/a |  25.0 ± n/a |   0.0 ± n/a | [  0.0%,  49.0%] |   0.0 ± n/a |
+| rkv_pp | 4 | 1 |   0.0 ± n/a |   0.0 ± n/a |   0.0 ± n/a |   0.0 ± n/a | [  0.0%,  49.0%] |   0.0 ± n/a |
+| valuediff_pp | 4 | 1 |  75.0 ± n/a |   0.0 ± n/a |  50.0 ± n/a |   0.0 ± n/a | [  0.0%,  49.0%] |   0.0 ± n/a |
+| valuediff_smooth_pp | 4 | 1 |  75.0 ± n/a |  25.0 ± n/a |  50.0 ± n/a |   0.0 ± n/a | [  0.0%,  49.0%] |   0.0 ± n/a |
+| vase_pp | 4 | 3 |   0.0 ±  0.0 |   0.0 ±  0.0 |   0.0 ±  0.0 |   0.0 ±  0.0 | [  0.0%,  24.2%] |   0.0 ±  0.0 |
+| random_pp | 4 | 3 |   0.0 ±  0.0 |   0.0 ±  0.0 |   0.0 ±  0.0 |   0.0 ±  0.0 | [  0.0%,  24.2%] |   0.0 ±  0.0 |
+| vacor_kv | 4 | 3 |  83.3 ± 14.4 |  41.7 ± 14.4 |  41.7 ± 14.4 |  16.7 ± 14.4 | [  4.7%,  44.8%] |  16.7 ± 14.4 |
+| vacor_pin | 4 | 3 |  75.0 ±  0.0 |  33.3 ± 14.4 |  33.3 ± 14.4 |   0.0 ±  0.0 | [  0.0%,  24.2%] |   0.0 ±  0.0 |
+| vacor_antithetic_only | 4 | 3 |   8.3 ± 14.4 |   0.0 ±  0.0 |   8.3 ± 14.4 |   0.0 ±  0.0 | [  0.0%,  24.2%] |   0.0 ±  0.0 |
+
+\* *dense evaluated with full KV cache (budget 0 / no eviction) as reference.*
+
+### Paired Comparison: vacor_kv vs valuediff_pp on All-3 (Budget 256)
+
+- **Evaluated Tasks**: 4
+- **vacor_kv wins**: 2 (50.0%)
+- **valuediff_pp wins**: 0 (0.0%)
+- **Ties**: 2 (50.0%)
+
+| Task | vacor_kv (avg All-3) | valuediff_pp (avg All-3) | Winner |
+| :--- | :---: | :---: | :---: |
+| milestone_08 | 0.33 | 0.00 | vacor_kv |
+| milestone_09 | 0.00 | 0.00 | tie |
+| milestone_10 | 0.33 | 0.00 | vacor_kv |
+| milestone_11 | 0.00 | 0.00 | tie |
 
 ## Budget 384
 
@@ -93,7 +157,7 @@
 
 ## Overall Paired Comparison: vacor_kv vs valuediff_pp on All-3 (All Budgets Pooled)
 
-- **Total (Budget, Task) Pairs**: 32
-- **vacor_kv wins**: 1 (3.1%)
-- **valuediff_pp wins**: 10 (31.2%)
-- **Ties**: 21 (65.6%)
+- **Total (Budget, Task) Pairs**: 40
+- **vacor_kv wins**: 3 (7.5%)
+- **valuediff_pp wins**: 10 (25.0%)
+- **Ties**: 27 (67.5%)

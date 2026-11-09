@@ -1,0 +1,72 @@
+[
+  {
+    "seq_len": 512,
+    "dense_mb": 112.0,
+    "budget_256_mb": 70.0,
+    "savings_256_ratio": 1.6,
+    "budget_384_mb": 98.0,
+    "savings_384_ratio": 1.14,
+    "budget_512_mb": 112.0,
+    "savings_512_ratio": 1.0
+  },
+  {
+    "seq_len": 1024,
+    "dense_mb": 224.0,
+    "budget_256_mb": 70.0,
+    "savings_256_ratio": 3.2,
+    "budget_384_mb": 98.0,
+    "savings_384_ratio": 2.29,
+    "budget_512_mb": 126.0,
+    "savings_512_ratio": 1.78
+  },
+  {
+    "seq_len": 2048,
+    "dense_mb": 448.0,
+    "budget_256_mb": 70.0,
+    "savings_256_ratio": 6.4,
+    "budget_384_mb": 98.0,
+    "savings_384_ratio": 4.57,
+    "budget_512_mb": 126.0,
+    "savings_512_ratio": 3.56
+  },
+  {
+    "seq_len": 4096,
+    "dense_mb": 896.0,
+    "budget_256_mb": 70.0,
+    "savings_256_ratio": 12.8,
+    "budget_384_mb": 98.0,
+    "savings_384_ratio": 9.14,
+    "budget_512_mb": 126.0,
+    "savings_512_ratio": 7.11
+  },
+  {
+    "seq_len": 8192,
+    "dense_mb": 1792.0,
+    "budget_256_mb": 70.0,
+    "savings_256_ratio": 25.6,
+    "budget_384_mb": 98.0,
+    "savings_384_ratio": 18.29,
+    "budget_512_mb": 126.0,
+    "savings_512_ratio": 14.22
+  },
+  {
+    "seq_len": 16384,
+    "dense_mb": 3584.0,
+    "budget_256_mb": 70.0,
+    "savings_256_ratio": 51.2,
+    "budget_384_mb": 98.0,
+    "savings_384_ratio": 36.57,
+    "budget_512_mb": 126.0,
+    "savings_512_ratio": 28.44
+  },
+  {
+    "seq_len": 32768,
+    "dense_mb": 7168.0,
+    "budget_256_mb": 70.0,
+    "savings_256_ratio": 102.4,
+    "budget_384_mb": 98.0,
+    "savings_384_ratio": 73.14,
+    "budget_512_mb": 126.0,
+    "savings_512_ratio": 56.89
+  }
+]

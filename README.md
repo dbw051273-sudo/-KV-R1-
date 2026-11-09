@@ -44,7 +44,17 @@ An empirical evaluation and mechanism analysis framework for Key-Value (KV) cach
 | `valuediff_pp` | 38.0% ± 0.0 | [30.6%, 46.0%] | 19.8 | 0.86 ms |
 | `snapkv_pp` | 42.0% ± 0.0 | [34.4%, 50.0%] | 19.4 | 0.66 ms |
 | `random_pp` | 38.7% ± 1.2 | [31.2%, 46.7%] | 19.8 | 0.46 ms |
-| `vacor_kv` (Ours) | **41.3% ± 2.3** | [33.8%, 49.3%] | 19.8 | 0.86 ms |
+| `vacor_kv` (Ours) | **41.3% ± 2.3** | [33.8%, 49.3%] | 19.8 | **0.86 ms** |
+
+### 3. GSM8K Elementary Arithmetic Evaluation (20 Problems, 60 Runs per Method, Budget=256)
+
+| Mode | Accuracy (Mean ± Std %) | 95% Wilson CI | Throughput (tok/s) | Online Eviction Latency (ms) |
+| :--- | :---: | :---: | :---: | :---: |
+| `dense` (Oracle) | 55.0% ± 0.0 | [42.5%, 66.9%] | 19.2 | 0.00 ms |
+| `valuediff_pp` | 55.0% ± 0.0 | [42.5%, 66.9%] | 19.3 | 1.98 ms |
+| `snapkv_pp` | 55.0% ± 0.0 | [42.5%, 66.9%] | 19.1 | 0.49 ms |
+| `random_pp` | 55.0% ± 0.0 | [42.5%, 66.9%] | 19.3 | 0.30 ms |
+| `vacor_kv` (Ours) | **55.0% ± 0.0** | [42.5%, 66.9%] | 19.3 | **0.56 ms** |
 
 ---
 
@@ -54,6 +64,9 @@ Generated high-resolution publication figures are located in `results/figures/`:
 - `fig1_coverage_and_horizon_survival.png`: Cross-head union coverage & age-quartile survival decay curves.
 - `fig2_suite_a_q17b_vs_q4b_all3.png`: Side-by-side All-3 recall comparison across budgets 384 and 512 on Qwen3-1.7B and Qwen3-4B.
 - `fig3_math500_benchmark.png`: Accuracy vs. eviction latency Pareto trade-offs on MATH-500.
+- `fig4_budget_scaling_pareto.png`: Pareto scaling curves across token budgets (128, 256, 384, 512) and M1 retention.
+- `fig5_efficiency_and_memory_scaling.png`: KV cache memory reduction vs context length (up to 102.4x) & CUDA kernel latencies.
+- `fig6_gsm8k_benchmark.png`: Multi-step elementary arithmetic reasoning accuracy on GSM8K.
 
 ---
 
@@ -74,9 +87,11 @@ python scripts/aggregate_ext.py --tag q17b
 python scripts/run_suite_a_ext.py --model Qwen/Qwen3-4B --tag q4b
 python scripts/aggregate_ext.py --tag q4b
 
-# 3. Run MATH-500 Evaluation
+# 3. Run MATH-500 and GSM8K Evaluations
 python scripts/run_math500_eval.py --num_problems 50 --budget 256 --residual 64 --seeds 3
 python scripts/aggregate_math500.py
+
+python scripts/run_gsm8k_eval.py --num_problems 20 --budget 256 --residual 64 --seeds 3
 
 # 4. Generate Figures
 python scripts/generate_plots.py
