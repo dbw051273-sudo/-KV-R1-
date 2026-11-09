@@ -1,0 +1,34 @@
+{
+  "dense": {
+    "n": 10,
+    "correct": 2,
+    "acc": 20.0,
+    "avg_tokens": 1200.0,
+    "avg_time": 48.43,
+    "avg_evicts": 0.0
+  },
+  "snapkv_pp": {
+    "n": 10,
+    "correct": 1,
+    "acc": 10.0,
+    "avg_tokens": 1200.0,
+    "avg_time": 68.13,
+    "avg_evicts": 14.0
+  },
+  "valuediff_pp": {
+    "n": 10,
+    "correct": 2,
+    "acc": 20.0,
+    "avg_tokens": 1200.0,
+    "avg_time": 67.37,
+    "avg_evicts": 14.0
+  },
+  "adaptive_vacor": {
+    "n": 10,
+    "correct": 1,
+    "acc": 10.0,
+    "avg_tokens": 1200.0,
+    "avg_time": 66.76,
+    "avg_evicts": 14.0
+  }
+}

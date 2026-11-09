@@ -124,7 +124,7 @@ class UnifiedEvictLayer(DynamicLayer):
             dtype=self.dtype, device=self.device,
         )
 
-        if self.track_positions or self.MODE in ("vacor_kv", "vacor_antithetic_only", "vacor_persist_only"):
+        if self.track_positions or self.MODE in ("vacor_kv", "vacor_antithetic_only", "vacor_persist_only", "vacor_pin", "adaptive_vacor"):
             self.pos_ids = torch.zeros(
                 batch_size, num_kv_heads, max_cache_len,
                 dtype=torch.int32, device=self.device,
@@ -568,6 +568,61 @@ class UnifiedEvictLayer(DynamicLayer):
                 res.scatter_(dim=-1, index=pin_rel, value=float("-inf"))
                 res_rel = res.topk(K_free - n_pin, dim=-1, largest=True).indices
                 cot_keep = torch.cat([pin_rel, res_rel], dim=-1) + pl
+            cot_keep, _ = cot_keep.sort(dim=-1)
+            ids_to_keep = torch.cat([prompt_idx, cot_keep], dim=-1)
+
+        # =====================================================================
+        # Method 8 (SOTA CLOSURE): `adaptive_vacor`
+        # Adaptive Value-Anchored Reservoir KV Eviction
+        # Dynamically gates between deterministic value anchoring and cross-head
+        # block-antithetic reservoir sampling based on budget pressure and outlier tail.
+        # =====================================================================
+        elif self.MODE == "adaptive_vacor":
+            v_cot = v_candidates[:, :, pl:n_cand, :]
+            v_mean = v_cot.mean(dim=2, keepdim=True)
+            l2_dev = (v_cot - v_mean).norm(dim=-1, dtype=torch.float32)
+            if n_cot_cand >= 5:
+                l2_span = F.avg_pool1d(
+                    l2_dev.view(B * H, 1, n_cot_cand), kernel_size=5, padding=2, stride=1
+                ).view(B, H, n_cot_cand)
+                l2_comb = 0.70 * l2_dev + 0.30 * l2_span
+            else:
+                l2_comb = l2_dev
+
+            # Budget-dependent smooth decay:
+            # When K_free <= 256: alpha_base = 0.95 (deterministic protection)
+            # When K_free <= 350: alpha_base = 0.90 (safeguards milestone constants across all heads)
+            # When K_free >= 440: alpha_base = 0.55 (unleashes multi-head antithetic reservoir coverage)
+            if K_free <= 256:
+                alpha_base = 0.95
+            elif K_free <= 350:
+                alpha_base = 0.90
+            else:
+                alpha_base = max(0.55, 0.90 - 0.35 * (float(K_free - 350) / 130.0))
+
+            # Distribution-tail gating: compute z-scores of L2 deviation
+            l2_mean = l2_comb.mean(dim=-1, keepdim=True)
+            l2_std = l2_comb.std(dim=-1, keepdim=True) + 1e-6
+            l2_z = (l2_comb - l2_mean) / l2_std
+            tail_count = int((l2_z >= 1.2).float().sum(dim=-1).max().item())
+
+            n_pin = max(int(round(K_free * alpha_base)), tail_count)
+            n_pin = min(max(1, n_pin), K_free - 1)
+
+            pin_rel = l2_comb.topk(n_pin, dim=-1, largest=True).indices
+
+            # Age-stratified reservoir score for remaining quota
+            if self.vacor_age_gamma > 0.0:
+                pos_cot = (self.pos_ids[:, :, pl:n_cand].float() - float(pl)).clamp(min=0.0)
+                max_cot_span = max(float(self.cumulative_length - pl), 1.0)
+                rel_birth = pos_cot / max_cot_span
+                res = self.priority_cache[:, :, pl:n_cand].clone() + self.vacor_age_gamma * (1.0 - 0.35 * rel_birth)
+            else:
+                res = self.priority_cache[:, :, pl:n_cand].clone()
+
+            res.scatter_(dim=-1, index=pin_rel, value=float("-inf"))
+            res_rel = res.topk(K_free - n_pin, dim=-1, largest=True).indices
+            cot_keep = torch.cat([pin_rel, res_rel], dim=-1) + pl
             cot_keep, _ = cot_keep.sort(dim=-1)
             ids_to_keep = torch.cat([prompt_idx, cot_keep], dim=-1)
 
