@@ -1,0 +1,165 @@
+{
+  "mcnemar_and_bootstrap": {
+    "dense": {
+      "b_vacor_wins": 2,
+      "c_base_wins": 0,
+      "tied_both_correct": 18,
+      "tied_both_incorrect": 30,
+      "p_value_exact": 0.5,
+      "accuracy_delta_percent": 4.0,
+      "bootstrap_95_ci_delta": [
+        0.0,
+        10.0
+      ]
+    },
+    "valuediff_pp": {
+      "b_vacor_wins": 3,
+      "c_base_wins": 1,
+      "tied_both_correct": 17,
+      "tied_both_incorrect": 29,
+      "p_value_exact": 0.625,
+      "accuracy_delta_percent": 4.0,
+      "bootstrap_95_ci_delta": [
+        -4.0,
+        12.0
+      ]
+    },
+    "snapkv_pp": {
+      "b_vacor_wins": 2,
+      "c_base_wins": 2,
+      "tied_both_correct": 18,
+      "tied_both_incorrect": 28,
+      "p_value_exact": 1.0,
+      "accuracy_delta_percent": 0.0,
+      "bootstrap_95_ci_delta": [
+        -8.0,
+        8.0
+      ]
+    },
+    "random_pp": {
+      "b_vacor_wins": 2,
+      "c_base_wins": 0,
+      "tied_both_correct": 18,
+      "tied_both_incorrect": 30,
+      "p_value_exact": 0.5,
+      "accuracy_delta_percent": 4.0,
+      "bootstrap_95_ci_delta": [
+        0.0,
+        10.0
+      ]
+    }
+  },
+  "subject_breakdown": [
+    {
+      "subject": "Algebra",
+      "num_problems": 12,
+      "dense_acc": 50.0,
+      "valuediff_acc": 50.0,
+      "snapkv_acc": 50.0,
+      "random_acc": 50.0,
+      "vacor_acc": 50.0
+    },
+    {
+      "subject": "Intermediate Algebra",
+      "num_problems": 8,
+      "dense_acc": 12.5,
+      "valuediff_acc": 12.5,
+      "snapkv_acc": 12.5,
+      "random_acc": 12.5,
+      "vacor_acc": 25.0
+    },
+    {
+      "subject": "Precalculus",
+      "num_problems": 7,
+      "dense_acc": 42.9,
+      "valuediff_acc": 28.6,
+      "snapkv_acc": 42.9,
+      "random_acc": 42.9,
+      "vacor_acc": 42.9
+    },
+    {
+      "subject": "Number Theory",
+      "num_problems": 7,
+      "dense_acc": 28.6,
+      "valuediff_acc": 28.6,
+      "snapkv_acc": 42.9,
+      "random_acc": 28.6,
+      "vacor_acc": 42.9
+    },
+    {
+      "subject": "Prealgebra",
+      "num_problems": 7,
+      "dense_acc": 71.4,
+      "valuediff_acc": 71.4,
+      "snapkv_acc": 71.4,
+      "random_acc": 71.4,
+      "vacor_acc": 71.4
+    },
+    {
+      "subject": "Geometry",
+      "num_problems": 5,
+      "dense_acc": 20.0,
+      "valuediff_acc": 40.0,
+      "snapkv_acc": 40.0,
+      "random_acc": 20.0,
+      "vacor_acc": 20.0
+    },
+    {
+      "subject": "Counting & Probability",
+      "num_problems": 4,
+      "dense_acc": 0.0,
+      "valuediff_acc": 0.0,
+      "snapkv_acc": 0.0,
+      "random_acc": 0.0,
+      "vacor_acc": 0.0
+    }
+  ],
+  "failure_taxonomy_counts": {
+    "attention_collapse_hallucination": 2,
+    "variance_eviction_loss": 1,
+    "algebraic_arithmetic_drift": 27,
+    "robust_generalization_wins": 2
+  },
+  "failure_taxonomy_cases": {
+    "attention_collapse_hallucination": [
+      "math500_011",
+      "math500_020"
+    ],
+    "variance_eviction_loss": [
+      "math500_046"
+    ],
+    "algebraic_arithmetic_drift": [
+      "math500_001",
+      "math500_002",
+      "math500_005",
+      "math500_007",
+      "math500_008",
+      "math500_010",
+      "math500_012",
+      "math500_013",
+      "math500_016",
+      "math500_018",
+      "math500_019",
+      "math500_022",
+      "math500_023",
+      "math500_024",
+      "math500_025",
+      "math500_026",
+      "math500_027",
+      "math500_030",
+      "math500_032",
+      "math500_033",
+      "math500_034",
+      "math500_035",
+      "math500_037",
+      "math500_040",
+      "math500_042",
+      "math500_044",
+      "math500_048"
+    ],
+    "robust_generalization_wins": [
+      "math500_011",
+      "math500_020"
+    ]
+  }
+}

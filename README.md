@@ -93,7 +93,11 @@ python scripts/aggregate_math500.py
 
 python scripts/run_gsm8k_eval.py --num_problems 20 --budget 256 --residual 64 --seeds 3
 
-# 4. Generate Figures
+# 4. Run Statistical Significance Tests & PagedAttention Verification
+python scripts/statistical_significance_test.py
+python scripts/test_paged_vacor.py
+
+# 5. Generate Figures
 python scripts/generate_plots.py
 ```
 
