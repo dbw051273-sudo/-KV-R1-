@@ -3,10 +3,11 @@
 Workflow:
 1. Parse technical report markdown.
 2. Embed high-resolution figures (base64 encoded) so the PDF is 100% self-contained.
-3. Apply top-tier academic styling (GitHub/IEEE style, clean page-breaks, elegant typography, zebra tables).
-4. Render LaTeX formulas using KaTeX / MathJax.
-5. Compile to PDF using Microsoft Edge headless engine.
-6. Archive desktop .md file to docs/ and Desktop/KV-R1论文资料/ folder, placing the final PDF directly on the Desktop.
+3. Apply top-tier academic styling (GitHub/IEEE style, clean page-breaks, elegant typography, three-line tables).
+4. Render LaTeX formulas using MathJax.
+5. Compile to PDF using Microsoft Edge headless engine with --no-pdf-header-footer.
+6. Ensure no duplicate headers, full A4 academic layout, and clean typography.
+7. Archive desktop .md file to docs/ and Desktop/KV-R1_技术文档归档/ folder, placing the final PDF directly on the Desktop.
 """
 
 import base64
@@ -58,20 +59,24 @@ def generate_pdf():
         "fig8_unified_latency_benchmark.png": FIGURES_DIR / "fig8_unified_latency_benchmark.png",
     }
 
-    # Enhance markdown with actual images
+    # Enhance markdown with actual images (replace placeholder with figure block)
     processed_lines = []
     lines = md_content.splitlines()
     for line in lines:
-        processed_lines.append(line)
-        # Check if line introduces a figure
+        matched_fig = False
         for fig_name, fig_path in fig_map.items():
-            if f"`results/figures/{fig_name}`" in line and fig_path.exists():
+            if line.strip() == f"`results/figures/{fig_name}`" and fig_path.exists():
                 b64_uri = encode_image_base64(fig_path)
                 processed_lines.append(f'\n<div class="figure-container"><img src="{b64_uri}" alt="{fig_name}" /><div class="figure-caption">图：{fig_name}</div></div>\n')
+                matched_fig = True
+                break
+        if not matched_fig:
+            processed_lines.append(line)
 
     temp_md.write_text("\n".join(processed_lines), encoding="utf-8")
 
-    # Run pandoc to convert to standalone HTML with MathJax
+    # Run pandoc to convert to standalone HTML with MathJax.
+    # Note: We omit --metadata title=... so Pandoc does NOT inject an extra <header id="title-block-header">.
     pandoc_cmd = [
         "pandoc",
         str(temp_md),
@@ -79,8 +84,6 @@ def generate_pdf():
         "--mathjax",
         "-o",
         str(temp_html),
-        "--metadata",
-        "title=长思维链推理模型KV缓存压缩评估与分析：机理解构、实证基准与系统优化",
     ]
     print("Running pandoc...")
     subprocess.run(pandoc_cmd, check=True)
@@ -91,60 +94,109 @@ def generate_pdf():
     custom_style = """
 <style>
 @page {
-    size: A4;
+    size: A4 portrait;
     margin: 18mm 16mm 18mm 16mm;
-    @bottom-center {
-        content: counter(page);
-        font-size: 9pt;
-        color: #718096;
-    }
+}
+
+html, body {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Strictly hide any pandoc auto-injected title block header to prevent duplicate titles */
+#title-block-header {
+    display: none !important;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
-    font-size: 10.2pt;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    font-size: 10pt;
     line-height: 1.62;
-    color: #2d3748;
+    color: #1f2937;
     background: #ffffff;
-    padding: 0;
-    margin: 0;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
 
-h1 {
-    font-size: 20pt;
-    font-weight: 700;
-    color: #1a202c;
-    border-bottom: 2.5px solid #3182ce;
-    padding-bottom: 8px;
-    margin-top: 24px;
-    margin-bottom: 16px;
+/* Paper Title styling */
+h1:first-of-type, h1[id*="长思维链推理模型中-kv-缓存压缩的失效机理与实证分析"] {
+    font-size: 21pt;
+    font-weight: 800;
+    color: #0f172a;
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 0;
+    border-bottom: none !important;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
     page-break-after: avoid;
 }
 
+/* Metadata paragraph immediately below title */
+h1:first-of-type + p {
+    text-align: center;
+    font-size: 9.3pt;
+    line-height: 1.65;
+    color: #4b5563;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+h1:first-of-type + p a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 16px 0 20px 0;
+}
+
+/* Abstract header */
+h2#摘要-abstract {
+    text-align: center;
+    font-size: 12.5pt;
+    font-weight: 700;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: none !important;
+    padding-bottom: 0;
+    margin-top: 10px;
+    margin-bottom: 12px;
+    page-break-after: avoid;
+}
+
+/* Standard Section Headings */
 h2 {
-    font-size: 14pt;
-    font-weight: 600;
-    color: #2b6cb0;
-    border-bottom: 1px solid #e2e8f0;
-    padding-bottom: 5px;
-    margin-top: 22px;
+    font-size: 13pt;
+    font-weight: 700;
+    color: #1e3a8a;
+    border-bottom: 1.5px solid #cbd5e1;
+    padding-bottom: 4px;
+    margin-top: 24px;
     margin-bottom: 12px;
     page-break-after: avoid;
 }
 
 h3 {
-    font-size: 11.5pt;
-    font-weight: 600;
-    color: #2d3748;
-    margin-top: 16px;
+    font-size: 11pt;
+    font-weight: 700;
+    color: #1f2937;
+    margin-top: 18px;
     margin-bottom: 8px;
     page-break-after: avoid;
 }
 
 h4 {
-    font-size: 10.5pt;
+    font-size: 10pt;
     font-weight: 600;
-    color: #4a5568;
+    color: #374151;
     margin-top: 14px;
     margin-bottom: 6px;
     page-break-after: avoid;
@@ -154,66 +206,86 @@ p {
     margin-top: 6px;
     margin-bottom: 8px;
     text-align: justify;
+    text-justify: inter-ideograph;
 }
 
+/* Professional Academic Three-Line Tables (Booktabs style) */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 14px 0;
-    font-size: 8.8pt;
-    page-break-inside: avoid;
-}
-
-th, td {
-    padding: 6px 8px;
-    text-align: left;
-    border: 1px solid #cbd5e0;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 14px 0 16px 0 !important;
+    font-size: 8.8pt !important;
+    line-height: 1.45 !important;
+    border-top: 2px solid #1e293b !important;
+    border-bottom: 2px solid #1e293b !important;
+    border-left: none !important;
+    border-right: none !important;
+    page-break-inside: avoid !important;
 }
 
 th {
-    background-color: #ebf8ff;
-    color: #2b6cb0;
-    font-weight: 600;
-    border-bottom: 2px solid #bee3f8;
+    border-top: none !important;
+    border-bottom: 1.5px solid #1e293b !important;
+    border-left: none !important;
+    border-right: none !important;
+    padding: 7px 8px !important;
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    text-align: left !important;
 }
 
-tr:nth-child(even) {
-    background-color: #f7fafc;
+td {
+    border-top: 1px solid #f1f5f9 !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    border-left: none !important;
+    border-right: none !important;
+    padding: 6px 8px !important;
+    color: #334155 !important;
+    vertical-align: top !important;
+}
+
+tr:nth-child(even) td {
+    background-color: #f8fafc !important;
 }
 
 code {
     font-family: "Cascadia Code", "Fira Code", Consolas, Courier, monospace;
-    font-size: 8.8pt;
-    background-color: #edf2f7;
-    color: #c53030;
-    padding: 2px 4px;
+    font-size: 8.6pt;
+    background-color: #f1f5f9;
+    color: #b91c1c;
+    padding: 1.5px 4px;
     border-radius: 3px;
+    border: 1px solid #e2e8f0;
 }
 
 pre {
     background-color: #f8fafc;
     border: 1px solid #e2e8f0;
-    border-left: 4px solid #3182ce;
-    padding: 10px 12px;
+    border-left: 3.5px solid #2563eb;
+    padding: 8px 12px;
     border-radius: 4px;
     overflow-x: auto;
-    font-size: 8.5pt;
+    font-size: 8.2pt;
     line-height: 1.45;
     page-break-inside: avoid;
+    margin: 10px 0;
 }
 
 pre code {
     background-color: transparent;
-    color: #2d3748;
+    border: none;
+    color: #1e293b;
     padding: 0;
 }
 
 blockquote {
     margin: 10px 0;
     padding: 8px 14px;
-    background-color: #ebf8ff;
-    border-left: 4px solid #3182ce;
-    color: #2c5282;
+    background-color: #f0fdf4;
+    border-left: 3.5px solid #10b981;
+    color: #166534;
     font-style: normal;
     border-radius: 0 4px 4px 0;
     page-break-inside: avoid;
@@ -225,34 +297,27 @@ blockquote p {
 
 .figure-container {
     text-align: center;
-    margin: 16px 0;
+    margin: 16px 0 14px 0;
     page-break-inside: avoid;
 }
 
 .figure-container img {
-    max-width: 95%;
+    max-width: 96%;
     height: auto;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #cbd5e1;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 .figure-caption {
     font-size: 8.5pt;
-    color: #718096;
-    margin-top: 5px;
+    color: #64748b;
+    margin-top: 6px;
     font-style: italic;
 }
 
-hr {
-    border: 0;
-    height: 1px;
-    background: #e2e8f0;
-    margin: 20px 0;
-}
-
 ul, ol {
-    padding-left: 20px;
+    padding-left: 22px;
     margin-top: 4px;
     margin-bottom: 8px;
 }
@@ -287,11 +352,11 @@ window.MathJax = {
         "--disable-gpu",
         "--run-all-compositor-stages-before-draw",
         "--virtual-time-budget=6000",
-        "--print-to-pdf-no-header",
+        "--no-pdf-header-footer",
         f"--print-to-pdf={TARGET_PDF}",
         str(temp_html),
     ]
-    res = subprocess.run(edge_cmd, capture_output=True, text=True)
+    res = subprocess.run(edge_cmd, capture_output=True, encoding="utf-8", errors="replace")
     if not TARGET_PDF.exists() or TARGET_PDF.stat().st_size == 0:
         raise RuntimeError(f"Edge PDF generation failed: {res.stderr}")
 
